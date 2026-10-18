@@ -1,7 +1,7 @@
 // Winter Cycling Block 1 — Service Worker
 // Caches the app shell for offline use. Bump CACHE_NAME on every deployment.
 
-const CACHE_NAME = 'wcb1-v2';
+const CACHE_NAME = 'wcb1-v1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (event) => {
