@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1a1a18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Winter Cycling">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Winter Cycling Block 1</title>
+<style>
+:root{--bg:#f9f9f7;--fg:#1a1a18;--mut:#5f5e5a;--card:#fff;--bd:#d3d1c7;--soft:#f1efe8;--ok:#1D9E75}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1a18;--fg:#f1efe8;--mut:#b4b2a9;--card:#262624;--bd:#444441;--soft:#2e2e2b}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--fg);padding:1.2rem;max-width:1000px;margin:0 auto}
+h1{font-size:20px;font-weight:600}.sub{font-size:13px;color:var(--mut);margin:4px 0 14px}
+.lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin:18px 0 8px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.m{background:var(--soft);border-radius:8px;padding:10px 12px}.m span{font-size:11px;color:var(--mut)}.m b{display:block;font-size:17px;margin-top:2px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tab{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--bd);background:var(--card);color:var(--mut);cursor:pointer;position:relative}
+.tab.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}.tab.dl{border-style:dashed}
+.tab.wd::after{content:'✓';position:absolute;top:-5px;right:-5px;background:var(--ok);color:#fff;border-radius:50%;width:14px;height:14px;font-size:9px;line-height:14px;text-align:center}
+.focus{font-size:12px;color:var(--mut);padding:8px 12px;background:var(--soft);border-radius:8px;border-left:3px solid var(--fg);margin-bottom:10px;line-height:1.5}
+.focus.d{border-left-color:#7f77dd}
+.sum{font-size:12px;color:var(--mut);background:var(--soft);border-radius:8px;padding:8px 12px;margin-bottom:10px}.sum strong{color:var(--fg)}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:4px}
+.day.done{border-color:var(--ok);border-width:2px}.day.skip{opacity:.5}
+.dn{font-size:10px;font-weight:600;text-transform:uppercase;color:var(--mut)}
+.sn{font-size:12px;font-weight:600;line-height:1.3}.sd{font-size:11px;color:var(--mut);line-height:1.45;flex:1}
+.b{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;width:fit-content}
+.run{background:#E6F1FB;color:#0C447C}.ride{background:#E1F5EE;color:#085041}.str{background:#FAEEDA;color:#633806}.key{background:#1a1a18;color:#fff}.rst{background:#F1EFE8;color:#444441}
+.ctl{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-top:4px;padding-top:6px;border-top:1px solid var(--bd)}
+button.t{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--mut)}
+button.t.d{background:var(--ok);color:#fff;border-color:var(--ok)}button.t.s{background:var(--soft)}
+.nt{font-size:10px;color:var(--mut);text-decoration:underline;cursor:pointer;margin-left:auto}
+.sl{font-size:10px;color:var(--mut)}input.h{width:38px;font-size:11px;border:1px solid var(--bd);border-radius:4px;padding:2px;text-align:center;background:var(--card);color:var(--fg)}
+.eb{font-size:13px;background:none;border:none;cursor:pointer;opacity:.3;padding:1px}.eb.on{opacity:1}
+textarea{width:100%;font-size:11px;border:1px solid var(--bd);border-radius:6px;padding:6px;background:var(--soft);color:var(--fg);font-family:Arial,sans-serif;resize:vertical}
+textarea.n{display:none;margin-top:4px;min-height:44px}textarea.n.v{display:block}
+.wn{margin-top:10px}.wn textarea{min-height:56px;font-size:12px;background:var(--card)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px;font-size:11px;font-weight:600;color:var(--mut)}
+.x{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;border:1px solid var(--bd);background:var(--card);color:var(--fg);cursor:pointer}
+.rs{font-size:11px;color:#e24b4a;background:none;border:none;text-decoration:underline;cursor:pointer;margin-left:auto}
+.exp{display:none;margin-top:8px}.exp textarea{font-family:monospace;min-height:110px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.card b{font-size:13px}.card p,.card li{font-size:12px;color:var(--mut);line-height:1.55}.card ul{padding-left:1.1rem}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+@media(max-width:720px){body{padding:.75rem}.grid{grid-template-columns:1fr 1fr}}@media(max-width:460px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Winter Cycling Block 1</h1>
+<p class="sub">6 weeks · Mon 19 Oct – Sun 29 Nov 2026 · Wahoo Systm · Raise MAP / VO2max · Running secondary · Weight down</p>
+
+<div class="lbl">Baseline — Systm Full Frontal, 10 Oct</div>
+<div class="metrics">
+<div class="m"><span>NM (5s)</span><b>824W</b></div><div class="m"><span>AC (1min)</span><b>459W</b></div>
+<div class="m"><span>MAP (5min)</span><b>297W</b></div><div class="m"><span>FTP</span><b>250W</b></div>
+<div class="m"><span>MAP / FTP at 107kg</span><b>2.78 / 2.34</b></div><div class="m"><span>Rider type</span><b>Attacker</b></div>
+</div>
+<div class="card" style="margin-top:8px"><ul>
+<li><b>Zones (FTP 250):</b> Z2 163–180W · sweet spot 220–233W · threshold 238–250W · VO2 reps 270–300W.</li>
+<li><b>Attacker:</b> strong 1-min power, relatively weaker 5 and 20-min. Longer VO2 reps (4–5min), more aerobic volume, no extra sprint or anaerobic work.</li>
+<li><b>Test caveat:</b> big ring unreachable, so NM and AC likely under-read; MAP and FTP treated as valid. Fix the front shifting before Tue 20 Oct. Re-test in W6 on the same setup.</li>
+<li><b>Success measure:</b> W6 re-test MAP above 297W (MAP is the practical VO2max proxy here), with weight trending down.</li>
+</ul></div>
+
+<div class="lbl">Weeks — W6 deload + re-test</div>
+<div class="tabs" id="wt"></div><div id="wk"></div>
+
+<div class="lbl">Systm library matching</div>
+<div class="card"><ul>
+<li><b>Tue (MAP):</b> filter 4DP focus = MAP, 60–80min. Read the interval breakdown: W1 ≈12min near MAP, W2 ≈16, W3 ≈20, W4/W5 ≈25, W6 ≈12 (priming). Mix long reps with micro-intervals (e.g. Half Is Easy, Micro Intervals, MAP Progression). Avoid AC and NM sessions.</li>
+<li><b>Thu (FTP):</b> filter 4DP focus = FTP, 60–75min. W1–2 sweet-spot style blocks; W3–5 threshold blocks (2×20 or 4×10).</li>
+<li><b>Fri:</b> Active Recovery category, 30–45min. <b>Sat:</b> outdoor. Workout names are candidates only: check each description.</li>
+<li><b>ERG vs slope:</b> ERG for Tue MAP reps and threshold blocks (stops over-cooking early reps). Slope for warm-ups, recoveries, Z2, Friday spin, sweet spot if you hold ±5W. Do not use ERG for the re-test efforts.</li>
+<li>Pick gear before each rep, cadence 85–95rpm. If failing the last rep, drop 3–5% rather than stop. Follow Systm targets; watts here are a sanity check.</li>
+</ul></div>
+
+<div class="lbl">Weight &amp; fuelling (107kg → 95–99kg by mid-March)</div>
+<div class="card"><ul>
+<li><b>Deficit:</b> ~400–500 kcal on Mon/Wed/Fri/Sun. Maintenance on Tue/Thu/Sat. Target 0.5–0.6kg/week on the 7-day mean of morning weights.</li>
+<li><b>Intervals:</b> carbs 60–90min before (bagel/white bread + jam + banana); bottle with 40–60g carb during sessions over 60min. Low-residue the day before key sessions.</li>
+<li><b>Saturday ride:</b> 60g carb/h. Never ride long fasted in a deficit.</li>
+<li>Protein 190–210g, fat floor 85g. Loss over 0.8kg/week for 2 weeks, or interval targets missed twice: add 200 kcal.</li>
+</ul></div>
+
+<div class="lbl">Rules</div>
+<div class="rules">
+<div class="card"><b>Protect order</b><p>1 Tue VO2 · 2 Thu threshold · 3 Sat outdoor ride · circuits and Friday spin are cut first.</p></div>
+<div class="card"><b>Deload = ceiling</b><p>W6 prescriptions are caps. Nothing extra before the Thursday re-test.</p></div>
+<div class="card"><b>Travel</b><p>Keep Tue VO2 on any bike, else a hard 20–30min run. Drop circuits first. Two key sessions = a good week.</p></div>
+<div class="card"><b>Missed reps</b><p>Miss the last 1–2 reps by over 5%: finish easy, add calories next day. Do not stack sessions.</p></div>
+<div class="card"><b>Running (secondary)</b><p>One easy Sunday run. If legs are fresh, a second easy 5km can replace the Friday spin. Run before strength on the same day.</p></div>
+</div>
+
+<script>
+const W=[
+[1,'19–25 Oct',0,'Ramp in on the 10 Oct baseline. Fix the front shifting before Tuesday. Clocks go back Sun 25 Oct.','4×3min @280–290W (~95% MAP), 3min easy. Controlled; do not chase 297W.','Sweet spot 2×15min @220–233W (88–93% FTP), 5min easy.','2h Z2 @163–180W. 60g carb/h.','8km @Z1 (5:25–5:50/km) + 6×20s strides.','Circuit ×3: goblet squat 10, push-ups 12, 1-arm row 10, KB swing 15, Pallof press 10/side. 30min.'],
+[2,'26 Oct–1 Nov',0,'First build week. Sat 31 Oct Parkrun is optional and easy only (a jog, not a race); if you run it, skip Sunday\'s run.','4×4min @280–290W (112–116% FTP), 4min easy. ≈16min near MAP.','Sweet spot 3×12min @225–238W (90–95% FTP), 4min easy.','2.5h Z2. 60g carb/h.','8km @Z1 + 6×20s strides.','Circuit ×3 + maintenance touch: back squat 1×5 @115kg (RPE ≤7) first. 35min.'],
+[3,'2–8 Nov',0,'Build. Longest threshold block so far.','5×4min @275–285W (110–114% FTP), 4min easy. ≈20min near MAP.','Threshold 2×20min @230–243W (92–97% FTP), 5min easy.','2.5h Z2.','10km @Z1 + 6×20s strides.','Circuit ×3. 30min.'],
+[4,'9–15 Nov',0,'Build. Work is back to normal, so this is a full progression week. Progress only if W3 avg energy is 3+ and sleep 6.5h+; otherwise repeat W3.','5×5min @270–280W (108–112% FTP), 5min easy. ≈25min near MAP. 80min total.','Threshold 3×15min @235–245W (94–98% FTP), 5min easy.','3h Z2. Add 2×15min tempo (80–85% FTP) if fresh.','10km @Z1 + 6×20s strides.','Circuit ×3 + maintenance touch: back squat 1×5 @118kg (RPE ≤7). 35min.'],
+[5,'16–22 Nov',0,'Peak week. Same MAP volume as W4 at slightly higher power. Work stays normal.','5×5min @275–285W (110–114% FTP), 5min easy. ≈25min near MAP. 80min total.','Threshold 4×10min @238–250W (95–100% FTP), 4min easy.','3h Z2.','10km @Z1 + 6×20s strides.','Circuit ×3. 30min.'],
+[6,'23–29 Nov',1,'DELOAD + re-test. Prescriptions are ceilings. Thursday Full Frontal on the same setup as 10 Oct, with the big ring working.','Priming 4×3min @280W, 3min easy. 50min total.','RE-TEST: Systm Full Frontal. Free-ride efforts as on 10 Oct. Record NM, AC, MAP, FTP.','2h Z2, easy.','6km @Z1. No strides.','Circuit ×2. 25min.']
+];
+const BL={key:'Key',run:'Run',ride:'Ride',str:'Strength',rst:'Rest'},EM=['','😴','😕','😐','🙂','⚡'],EL=['','Exhausted','Low','OK','Good','Great'];
+function days(w){const [n,,dl,,tue,thu,sat,sun,cir]=w;return[
+['Mon','Rest / mobility','rst','Full rest. Log 7-day weight mean. Check-in day.'],
+['Tue',n===6?'Priming':'Systm VO2 / MAP','key',tue+' Indoor, ERG.'],
+['Wed','Circuit / accessories','str',cir+' Optional easy 30min spin.'],
+['Thu',n===6?'Systm re-test':(n<3?'Systm sweet spot':'Systm threshold'),'key',thu+' Indoor.'],
+['Fri',dl?'Rest':'Z2 spin','ride' ,dl?'Full rest.':'Z2 spin 40–45min @60–65% FTP (optional; deficit tool). Keep it easy.'],
+['Sat','Outdoor ride','ride',sat+' Daylight.'],
+['Sun','Easy run','run',sun]];}
+// storage
+const sv=(k,v)=>{try{localStorage.setItem('wcb1_'+k,JSON.stringify(v))}catch(e){}};
+const ld=(k,d)=>{try{const v=localStorage.getItem('wcb1_'+k);return v!==null?JSON.parse(v):d}catch(e){return d}};
+let cw=ld('cw',1);
+const $=id=>document.getElementById(id);
+function dk(n,i){return 'w'+n+'_d'+i}
+function render(){
+ const t=$('wt');t.innerHTML='';
+ W.forEach(w=>{const b=document.createElement('button');b.className='tab'+(cw===w[0]?' on':'')+(w[2]?' dl':'')+(isDone(w)?' wd':'');b.textContent='W'+w[0]+(w[2]?' ↓':'');b.onclick=()=>{cw=w[0];sv('cw',cw);render()};t.appendChild(b)});
+ const w=W.find(x=>x[0]===cw),n=w[0];let h=`<div class="focus${w[2]?' d':''}"><strong>Week ${n} · ${w[1]}.</strong> ${w[3]}</div><div class="sum" id="sm"></div><div class="grid">`;
+ days(w).forEach((d,i)=>{const k=dk(n,i),st=ld(k+'_s','p'),sl=ld(k+'_h',''),en=ld(k+'_e',0),nt=ld(k+'_n','');
+  h+=`<div class="day${st==='d'?' done':st==='s'?' skip':''}"><span class="dn">${d[0]}</span><span class="sn">${d[1]}</span><span class="sd">${d[3]}</span><span class="b ${d[2]}">${BL[d[2]]}</span>
+  <div class="ctl"><button class="t${st==='d'?' d':''}" onclick="stat('${k}','d')">${st==='d'?'✓ Done':'Mark done'}</button><button class="t${st==='s'?' s':''}" onclick="stat('${k}','s')">${st==='s'?'Skipped':'Skip'}</button><span class="nt" onclick="tn('${k}')">notes</span></div>
+  <div class="ctl" style="border:0;padding:0"><span class="sl">😴</span><input class="h" type="number" min="3" max="12" step="0.5" placeholder="hrs" value="${sl}" onchange="sh('${k}',this.value)"><span class="sl">Energy</span>${[1,2,3,4,5].map(e=>`<button class="eb${en===e?' on':''}" title="${EL[e]}" onclick="se('${k}',${e})">${EM[e]}</button>`).join('')}</div>
+  <textarea class="n${nt?' v':''}" id="n_${k}" placeholder="Notes…" onchange="sn('${k}',this.value)">${nt}</textarea></div>`});
+ h+=`</div><div class="wn"><div class="row">Week notes / Monday check-in <button class="x" onclick="ex()">📋 Export for check-in</button><button class="rs" onclick="rw()">Reset week</button></div><textarea id="wnote" placeholder="How did the week go?" onchange="sv('w${n}_note',this.value)">${ld('w'+n+'_note','')}</textarea><div class="exp" id="exp"><div class="row">Copy and paste into Claude <button class="x" onclick="cp()">Copy</button></div><textarea id="et" readonly></textarea></div></div>`;
+ $('wk').innerHTML=h;sum();
+}
+function stat(k,v){sv(k+'_s',ld(k+'_s','p')===v?'p':v);render()}
+function sh(k,v){sv(k+'_h',v);sum()}
+function se(k,v){sv(k+'_e',ld(k+'_e',0)===v?0:v);render()}
+function sn(k,v){sv(k+'_n',v)}
+function tn(k){const e=$('n_'+k);e.classList.toggle('v');if(e.classList.contains('v'))e.focus()}
+function stats(w){let d=0,s=0,hT=0,hC=0,eT=0,eC=0;const dd=days(w);dd.forEach((x,i)=>{const k=dk(w[0],i),st=ld(k+'_s','p');if(x[2]!=='rst'){if(st==='d')d++;if(st==='s')s++}const h=parseFloat(ld(k+'_h',''));if(h>0){hT+=h;hC++}const e=ld(k+'_e',0);if(e>0){eT+=e;eC++}});return{d,s,tot:dd.filter(x=>x[2]!=='rst').length,h:hC?(hT/hC).toFixed(1):null,e:eC?(eT/eC).toFixed(1):null}}
+function isDone(w){const s=stats(w);return s.tot>0&&s.d===s.tot}
+function sum(){const s=stats(W.find(x=>x[0]===cw)),p=s.tot?Math.round(s.d/s.tot*100):0;$('sm').innerHTML=`<strong>${s.d}/${s.tot}</strong> sessions · ${s.s} skipped · ${p}%`+(s.h?` · 😴 avg <strong>${s.h}h</strong>`:'')+(s.e?` · Energy avg <strong>${s.e}/5</strong>`:'')}
+function ex(){const w=W.find(x=>x[0]===cw),n=w[0],S={d:'✓ Done',s:'— Skipped',p:'○ Pending'};let L=['WINTER CYCLING BLOCK 1 — WEEK '+n+' CHECK-IN',w[1],'Focus: '+w[3],'─'.repeat(40)];
+ days(w).forEach((d,i)=>{const k=dk(n,i),h=ld(k+'_h',''),e=ld(k+'_e',0),nt=ld(k+'_n','');L.push(d[0].toUpperCase()+'  '+d[1]);L.push(`  Status: ${S[ld(k+'_s','p')]}  |  Sleep: ${h?h+'h':'—'}  |  Energy: ${e?EL[e]:'—'}`);if(nt.trim())L.push('  Notes: '+nt.trim())});
+ const s=stats(w);L.push('─'.repeat(40),'Week notes:\n'+(ld('w'+n+'_note','').trim()||'(none)'),'─'.repeat(40),`Sessions: ${s.d}/${s.tot} completed, ${s.s} skipped`);if(s.h)L.push('Avg sleep: '+s.h+'h/night');if(s.e)L.push('Avg energy: '+s.e+'/5');
+ $('et').value=L.join('\n');const e=$('exp');e.style.display=e.style.display==='block'?'none':'block'}
+function cp(){const e=$('et');e.select();try{navigator.clipboard.writeText(e.value)}catch(x){document.execCommand('copy')}}
+function rw(){if(!confirm('Reset all data for this week?'))return;const n=cw;days(W.find(x=>x[0]===n)).forEach((d,i)=>{const k=dk(n,i);['_s','_h','_e','_n'].forEach(x=>{try{localStorage.removeItem('wcb1_'+k+x)}catch(e){}})});sv('w'+n+'_note','');render()}
+render();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
